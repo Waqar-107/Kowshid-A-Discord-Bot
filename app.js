@@ -24,7 +24,7 @@ client.on('ready', () => {
 });
 
 client.on('message', (msg) => {
-	if (msg.content === 'yo') msg.reply('kukhur! eta heroku theke reply btw');
+	if (msg.content === 'yo') msg.reply('kukhur! eta repl.it theke reply btw');
 	else if (msg.content.includes('biye') && msg.author.id != client.user.id)
 		msg.reply('vai, biyer kotha bole pera dish na toh');
 });
