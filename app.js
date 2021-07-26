@@ -15,7 +15,7 @@ client.on('ready', () => {
 });
 
 client.on('message', (msg) => {
-	if (msg.content === 'yo') msg.reply('kukhur!');
+	if (msg.content === 'yo') msg.reply('kukhur! eta heroku theke reply btw');
 	else if (msg.content.includes('biye') && msg.author.id != client.user.id)
 		msg.reply('vai, biyer kotha bole pera dish na toh');
 });
@@ -43,7 +43,7 @@ const sendReminder = (channelId, link) => {
 		client.channels.cache
 			.get(channelId)
 			.send(
-				"a gentle reminder! you have class starting in the next 10 minutes unless it's been rescheduled :stuck_out_tongue:! Here's the link\n\n" +
+				"a gentle reminder! you have class starting in the next 10 minutes unless it's been rescheduled :stuck_out_tongue: Here's the link,\n\n" +
 					link
 			);
 	} catch (err) {
