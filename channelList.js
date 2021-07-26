@@ -1,13 +1,27 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const msChannels = [
 	{
 		name: 'subject-1',
-		link: 'https://cse.buet.ac.bd/',
+		link: process.env.DUMMY_LINK,
+		day: 'Tuesday',
+		hour: '1',
+		minute: '08',
 	},
 
 	{
 		name: 'subject-2',
-		link: 'http://ces.buet.ac.bd/',
+		link: process.env.DUMMY_LINK,
+		day: 'Tuesday',
+		hour: '1',
+		minute: '08',
 	},
+
+	// {
+	// 	name: 'bioinformatics-algorithms',
+	// 	link: process.env.BIOINFORMATICS_ALGORITHMS,
+	// },
 ];
 
 module.exports = msChannels;
