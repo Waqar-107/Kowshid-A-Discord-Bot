@@ -1,9 +1,18 @@
+const express = require('express');
+const cors = require('cors');
 const discord = require('discord.js');
 const dotenv = require('dotenv');
 const msChannels = require('./channelList');
 const cron = require('node-cron');
 
 dotenv.config();
+
+const port = process.env.PORT || 5000;
+const app = express();
+
+app.use(cors());
+app.get('/', (req, res) => res.send('Hello World!'));
+app.listen(port, () => console.log('server started!'));
 
 const client = new discord.Client();
 client.login(process.env.DISCORD_TOKEN);

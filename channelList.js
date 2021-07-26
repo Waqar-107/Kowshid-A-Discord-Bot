@@ -6,16 +6,16 @@ const msChannels = [
 		name: 'subject-1',
 		link: process.env.DUMMY_LINK,
 		day: 'Tuesday',
-		hour: '1',
-		minute: '37',
+		hour: '2',
+		minute: '20',
 	},
 
 	{
 		name: 'subject-2',
 		link: process.env.DUMMY_LINK,
 		day: 'Tuesday',
-		hour: '1',
-		minute: '38',
+		hour: '2',
+		minute: '21',
 	},
 
 	// {
