@@ -7,7 +7,7 @@ const msChannels = [
 		link: process.env.DUMMY_LINK,
 		day: 'Tuesday',
 		hour: '1',
-		minute: '32',
+		minute: '35',
 	},
 
 	{
@@ -15,7 +15,7 @@ const msChannels = [
 		link: process.env.DUMMY_LINK,
 		day: 'Tuesday',
 		hour: '1',
-		minute: '33',
+		minute: '35',
 	},
 
 	// {
