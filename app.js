@@ -1,5 +1,6 @@
 const discord = require('discord.js');
 const dotenv = require('dotenv');
+const msChannels = require('./channelList');
 
 dotenv.config();
 
@@ -15,12 +16,9 @@ client.on('message', (msg) => {
 	if (msg.content === 'yo') msg.reply('kukhur!');
 	else if (msg.content.includes('biye') && msg.author.id != client.user.id)
 		msg.reply('vai, biyer kotha bole pera dish na toh');
-	else if (msg.content === '107') {
-		sendReminder();
-	}
 });
 
-function getChannels() {
+const getChannels = () => {
 	let channelDetails = [];
 
 	try {
@@ -36,19 +34,24 @@ function getChannels() {
 	}
 
 	return channelDetails;
-}
+};
 
-function sendReminder() {
+const sendReminder = () => {
 	let channels = getChannels();
-	let available = ['subject-1', 'subject-2'];
 
 	for (let channel of channels) {
-		if (available.indexOf(channel.name) > -1) {
+		let idx = msChannels.findIndex((c) => c.name === channel.name);
+		if (idx > -1) {
 			try {
-				client.channels.cache.get(channel.id).send('hello kukhur');
+				client.channels.cache
+					.get(channel.id)
+					.send(
+						"a gentle reminder! you have class starting in the next 10 minutes! Here's the link\n\n" +
+							msChannels[idx].link
+					);
 			} catch (err) {
 				console.log('error in sending reminder: ' + err);
 			}
 		}
 	}
-}
+};
