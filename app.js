@@ -20,64 +20,70 @@ client.login(process.env.DISCORD_TOKEN);
 client.on('ready', () => {
 	console.log('Logged in as ' + client.user.username);
 	console.log('------');
-	scheduleJobs();
+	client.user.setActivity('with your classes', { type: 'আর কত!!!' });
+	//scheduleJobs();
 });
 
 client.on('message', (msg) => {
-	if (msg.content === 'yo') msg.reply('kukhur! eta repl.it theke reply btw');
+	if (msg.guild.id !== process.env.GUILD_ID) return;
+
+	if (msg.content === 'yo') msg.reply('kukhur!');
 	else if (msg.content.includes('biye') && msg.author.id != client.user.id)
-		msg.reply('vai, biyer kotha bole pera dish na toh');
+		msg.reply('ভাই বিয়ের কথা বলে আর পেরা দিস না তো :rage:');
+	else if (msg.content === 'test_all_ch') {
+		let availableChannels = getChannels();
+		availableChannels.map((channel) => {
+			sendMessage(channel.id, 'hello world!');
+		});
+	}
 });
 
 const getChannels = () => {
-	let channelDetails = [];
+	let guild = client.guilds.cache
+		.array()
+		.filter((guild) => guild.id === process.env.GUILD_ID);
 
-	try {
-		let channels = client.channels.cache.array();
-		for (const channel of channels) {
-			channelDetails.push({
-				id: channel.id,
-				name: channel.name,
-			});
-		}
-	} catch (err) {
-		console.log('error getting channels: ' + err);
+	if (!guild || guild.length === 0) return [];
+
+	guild = guild[0];
+
+	let channelDetails = [];
+	let channels = guild.channels.cache.array();
+
+	for (const channel of channels) {
+		channelDetails.push({
+			id: channel.id,
+			name: channel.name,
+		});
 	}
 
 	return channelDetails;
 };
 
-const sendReminder = (channelId, link) => {
+const sendMessage = (channelId, message) => {
 	try {
-		client.channels.cache
-			.get(channelId)
-			.send(
-				"a gentle reminder! you have class starting in the next 10 minutes unless it's been rescheduled :stuck_out_tongue: Here's the link,\n\n" +
-					link
-			);
+		client.channels.cache.get(channelId).send(message);
 	} catch (err) {
 		console.log('error in sending reminder: ' + err);
 	}
 };
 
-// second minute hour day_of_month month day_of_week
-// * minute hour * * day_of_week
-// schedule job for all the available subjects
+const sendReminder = (channelId, link) => {
+	let msg =
+		"a gentle reminder! you have class starting in the next 10 minutes unless it's been rescheduled :stuck_out_tongue: Here's the link,\n\n" +
+		link;
+	sendMessage(channelId, msg);
+};
+
 const scheduleJobs = () => {
 	let availableChannels = getChannels();
 	msChannels.map((channel) => {
 		let time = `${channel.minute} ${channel.hour} * * ${channel.day}`;
 		let channelDetails = availableChannels.find((c) => c.name === channel.name);
 		if (channelDetails) {
-			let scheduledMessage = new cron.schedule(
-				time,
-				() => {
-					sendReminder(channelDetails.id, channel.link);
-				},
-				{
-					timeZone: 'Asia/Dhaka',
-				}
-			);
+			let scheduledMessage = new cron.schedule(time, () => {
+				sendReminder(channelDetails.id, channel.link);
+			});
 
 			scheduledMessage.start();
 			console.log('scheduled message for', channelDetails.name);
