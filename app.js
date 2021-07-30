@@ -34,11 +34,10 @@ client.on('message', (msg) => {
 	else if (msg.content === 'test_all_ch') {
 		let availableChannels = getChannels();
 		availableChannels.map((channel) => {
-			if (channel.name === 'bot-testing')
-				sendMessage(
-					channel.id,
-					'hello world! I am a bot programmed to give reminder of your classes prior to 15 minutes of the class!'
-				);
+			sendMessage(
+				channel.id,
+				'hello world! I am a bot programmed to give reminder of your classes prior to 15 minutes of the class!'
+			);
 		});
 	}
 });
