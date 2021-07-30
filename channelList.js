@@ -3,6 +3,14 @@ dotenv.config();
 
 const msChannels = [
 	{
+		name: 'bot-tsting',
+		link: 'this is a dummy link',
+		day: 'Friday',
+		hour: '21',
+		minute: '40',
+	},
+
+	{
 		name: 'bioinformatics-algorithms',
 		link: process.env.BIOINFORMATICS_ALGORITHMS,
 		day: 'Sunday',

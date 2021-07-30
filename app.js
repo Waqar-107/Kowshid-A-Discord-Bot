@@ -21,7 +21,7 @@ client.on('ready', () => {
 	console.log('Logged in as ' + client.user.username);
 	console.log('------');
 	// client.user.setActivity('আর কত!!!', { type: 'CUSTOM_STATUS' });
-	//scheduleJobs();
+	scheduleJobs();
 });
 
 client.on('message', (msg) => {
@@ -83,7 +83,7 @@ const sendReminder = (channelId, link) => {
 const scheduleJobs = () => {
 	let availableChannels = getChannels();
 	msChannels.map((channel) => {
-		let time = `${channel.minute} ${channel.hour} * * ${channel.day}`;
+		let time = `${channel.minute} ${channel.hour - 6} * * ${channel.day}`;
 		let channelDetails = availableChannels.find(
 			(c) =>
 				c.name &&
