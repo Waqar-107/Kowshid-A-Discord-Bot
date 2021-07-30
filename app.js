@@ -20,11 +20,12 @@ client.login(process.env.DISCORD_TOKEN);
 client.on('ready', () => {
 	console.log('Logged in as ' + client.user.username);
 	console.log('------');
-	client.user.setActivity('with your classes', { type: 'আর কত!!!' });
+	// client.user.setActivity('আর কত!!!', { type: 'CUSTOM_STATUS' });
 	//scheduleJobs();
 });
 
 client.on('message', (msg) => {
+	console.log(msg.content, msg.guild.id);
 	if (msg.guild.id !== process.env.GUILD_ID) return;
 
 	if (msg.content === 'yo') msg.reply('kukhur!');
@@ -33,7 +34,11 @@ client.on('message', (msg) => {
 	else if (msg.content === 'test_all_ch') {
 		let availableChannels = getChannels();
 		availableChannels.map((channel) => {
-			sendMessage(channel.id, 'hello world!');
+			if (channel.name === 'bot-testing')
+				sendMessage(
+					channel.id,
+					'hello world! I am a bot programmed to give reminder of your classes prior to 15 minutes of the class!'
+				);
 		});
 	}
 });
@@ -79,7 +84,12 @@ const scheduleJobs = () => {
 	let availableChannels = getChannels();
 	msChannels.map((channel) => {
 		let time = `${channel.minute} ${channel.hour} * * ${channel.day}`;
-		let channelDetails = availableChannels.find((c) => c.name === channel.name);
+		let channelDetails = availableChannels.find(
+			(c) =>
+				c.name &&
+				channel.name &&
+				c.name.toLowerCase() === channel.name.toLowerCase()
+		);
 		if (channelDetails) {
 			let scheduledMessage = new cron.schedule(time, () => {
 				sendReminder(channelDetails.id, channel.link);
